@@ -1,0 +1,18 @@
+.cadNavbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#breadcrumb {
+    margin-left: 10px;
+}
+
+.viewErroContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
