@@ -1,6 +1,6 @@
 'use client'
 import {React, useState, useEffect} from "react";
-import {Input, Select, SelectItem, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Textarea, Button, Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
+import {Input, Select, SelectItem, Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Textarea, Button, Breadcrumbs, BreadcrumbItem, Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue } from "@nextui-org/react";
 import '@/app/erro/[id]/viewerro.css';
 import { SlArrowLeftCircle } from "react-icons/sl";
 import { getSistemas } from "@/app/data/sistema/fetchsistema";
@@ -14,6 +14,14 @@ function Erro(cdErro, nmErro, deErro, autor, cdSistema) {
   this.autor = autor, 
   this.cdSistema = cdSistema
 }
+
+const columns = [
+  {
+    key: "deSolucao",
+    label: "Descrição",
+  }
+];
+
 
 export default function Page({ params }) {
   const [sistemas, setSistemas] = useState([]);
@@ -51,7 +59,6 @@ export default function Page({ params }) {
       setDeErro(erro.deErro);
       setAutor(erro.autor);
       setSolucoes(erro.solucoes);
-      console.log(erro);
       if(erro.sistema?.cdSistema != null && erro.sistema?.cdSistema != undefined) {
         setCdSistema(erro.sistema.cdSistema);
         sistemas.forEach(sys => {
@@ -63,8 +70,6 @@ export default function Page({ params }) {
 
     };
   }, [erro])
-
-  
 
     return (
       <div>
@@ -88,17 +93,30 @@ export default function Page({ params }) {
         <br/>
         <div className="viewErroContainer">
             <br/>
-            <h2>{sistema.sgSistema} - {nmErro}</h2>
+            <h2><b>{sistema.sgSistema} - {nmErro}</b></h2>
             <br/>
-            <label>Descrição</label>
-            <p>{deErro}</p>
+            <label>Descrição: <p>{deErro}</p></label>
             <br/>
-            <label>Soluções</label>
-            {solucoes.forEach((solucao) => {
-              <p>{solucao.deSolucao}</p>
-            }             
-            )}
-            
+            <label>Autor: <p>{autor}</p></label>
+            <br/>
+            <label>Soluções:</label>
+            <Table aria-label="Tabela de Soluções" shadow="lg" radius="lg" className="solucoesTable" isStriped>
+              <TableHeader columns={columns} >
+                {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+              </TableHeader>
+              <TableBody 
+                items={solucoes}>
+                {(solucao) => (
+                  <TableRow key={solucao.cdErro}>
+                    {(columnKey) => 
+                      <TableCell>
+                        { getKeyValue(solucao, columnKey) }
+                      </TableCell>           
+                    }
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>   
             <br/>
         </div>
       </div>

@@ -77,7 +77,6 @@ export default function ErrorTable(erros) {
         </Navbar>
       </div>
 
-
       <Table aria-label="Tabela de erros" shadow="lg" radius="lg" className="errorTable" isStriped>
         <TableHeader columns={columns} >
           {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
